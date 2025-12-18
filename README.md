@@ -31,9 +31,10 @@ Knowledge-building workflows that require **custom agent prompts** with user con
 
 ## Playbook Architecture
 
-Each playbook follows a 5-document chain pattern:
+Each playbook follows a 5-document chain pattern (with optional initialization):
 
 ```
+0_INITIALIZE.md  -> (Optional) One-time setup, create folder structure/agents
 1_ANALYZE.md     -> Survey target, identify what to research/fix
 2_FIND_*.md      -> Find specific issues/gaps/entities
 3_EVALUATE.md    -> Rate candidates by priority criteria
@@ -43,6 +44,7 @@ Each playbook follows a 5-document chain pattern:
 
 ### Loop Control Mechanism
 
+- Document 0 (if present) has `Reset: OFF` and runs once at the start
 - Documents 1-4 have `Reset: OFF` (don't auto-reset when completed)
 - Document 5 has `Reset: ON` and controls the loop by conditionally resetting 1-4
 - Each loop iteration creates `LOOP_N_*` working files with incremented loop number

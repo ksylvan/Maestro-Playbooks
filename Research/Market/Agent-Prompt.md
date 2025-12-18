@@ -59,3 +59,51 @@ Depending on the market, research these entity categories:
 - Cross-reference multiple sources
 - Note when information is uncertain or conflicting
 - Include both qualitative insights and quantitative data where available
+
+---
+
+## Specialized Agents
+
+After initialization (`0_INITIALIZE.md`), the vault will contain specialized agents in the `Agents/` folder (also accessible via `.claude/agents`):
+
+| Agent | Purpose |
+|-------|---------|
+| `company-researcher` | Research and create company profiles |
+| `product-researcher` | Research and create product/service profiles |
+| `person-researcher` | Research and create key people profiles |
+| `technology-researcher` | Research and create technology profiles |
+| `trend-researcher` | Research and analyze market trends |
+
+### Using Agents
+
+You can spawn these agents using the Task tool to research specific entities:
+
+```
+Task: "Research Acme Corp for the knowledge vault"
+Agent: company-researcher
+```
+
+Each agent will:
+1. Use web search to gather information
+2. Create a structured markdown profile
+3. Add `[[wiki-links]]` to related entities
+4. Update INDEX.md with the new entry
+
+---
+
+## Slash Commands
+
+After initialization, the vault will contain commands in the `Commands/` folder (also accessible via `.claude/commands`):
+
+| Command | Purpose |
+|---------|---------|
+| `/research` | Research a specific entity and add to vault |
+
+---
+
+## Working Style
+
+- **Keep going until done** - Complete research tasks without unnecessary pauses
+- **Use agents for entity research** - Spawn specialized agents for each entity type
+- **Maintain connections** - Always add `[[wiki-links]]` between related entities
+- **Update INDEX.md** - Keep the launch page current with all researched entities

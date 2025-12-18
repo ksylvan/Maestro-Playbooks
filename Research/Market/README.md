@@ -5,13 +5,14 @@ A systematic Auto Run playbook for building comprehensive knowledge vaults about
 ## Overview
 
 This playbook creates an automated pipeline that:
-1. **Analyzes** a target market to understand its structure and key entity types
-2. **Discovers** specific entities (companies, products, people, technologies, trends)
-3. **Evaluates** each entity by importance and research effort
-4. **Researches** high-priority entities using web search
-5. **Loops** until coverage targets are met or all high-priority entities are researched
+1. **Initializes** the vault with folder structure, agents, and commands
+2. **Analyzes** a target market to understand its structure and key entity types
+3. **Discovers** specific entities (companies, products, people, technologies, trends)
+4. **Evaluates** each entity by importance and research effort
+5. **Researches** high-priority entities using web search
+6. **Loops** until coverage targets are met or all high-priority entities are researched
 
-The output is an **Obsidian-style knowledge vault** with interlinked markdown files.
+The output is an **Obsidian-style knowledge vault** with interlinked markdown files and specialized Claude Code agents.
 
 ## Requirements
 
@@ -37,33 +38,64 @@ This playbook relies heavily on web search to gather market information. Ensure 
 | Document | Purpose | Reset on Completion? |
 |----------|---------|---------------------|
 | `Agent-Prompt.md` | Custom agent prompt with market configuration | N/A |
+| `0_INITIALIZE.md` | Create vault structure, agents, commands, and .claude symlinks | No |
 | `1_ANALYZE.md` | Survey market, identify entity types, create templates | No |
 | `2_DISCOVER.md` | Find specific entities in each category | No |
 | `3_EVALUATE.md` | Prioritize entities by importance and effort | No |
 | `4_RESEARCH.md` | Research one entity, create vault profile | No |
 | `5_PROGRESS.md` | Coverage gate - resets 1-4 if targets not met | **Yes** |
 
-## Generated Files
+## Generated Vault Structure
 
-### Working Documents (per loop)
+```
+vault/
+├── .claude/
+│   ├── agents -> ../Agents      # Symlink for Claude Code discovery
+│   └── commands -> ../Commands  # Symlink for Claude Code discovery
+├── Agents/                      # Entity-specific research agents
+│   ├── company-researcher.md
+│   ├── product-researcher.md
+│   ├── person-researcher.md
+│   ├── technology-researcher.md
+│   └── trend-researcher.md
+├── Commands/                    # Slash commands
+│   └── research.md
+├── Companies/                   # Company profiles
+├── Products/                    # Product profiles
+├── People/                      # Key people profiles
+├── Technologies/                # Technology overviews
+├── Trends/                      # Trend analyses
+├── Resources/                   # References and data sources
+├── INDEX.md                     # Launch page with navigation
+└── CLAUDE.md                    # Vault-specific instructions
+```
+
+### Why Agents/ and .claude/?
+
+- **Agents/** folder is visible in Obsidian for easy reference and editing
+- **.claude/** folder with symlinks allows Claude Code to discover and use the agents
+- This pattern keeps agents accessible while maintaining Claude Code integration
+
+## Generated Agents
+
+After initialization, the vault contains specialized research agents:
+
+| Agent | Purpose |
+|-------|---------|
+| `company-researcher` | Research and create company profiles |
+| `product-researcher` | Research and create product/service profiles |
+| `person-researcher` | Research and create key people profiles |
+| `technology-researcher` | Research and create technology profiles |
+| `trend-researcher` | Research and analyze market trends |
+
+These agents can be spawned via the Task tool to research specific entities.
+
+## Working Documents (per loop)
+
 - `LOOP_N_MARKET_ANALYSIS.md` - Market overview and entity templates
 - `LOOP_N_ENTITIES.md` - Discovered entities with basic info
 - `LOOP_N_PLAN.md` - Prioritized research targets
 - `RESEARCH_LOG_{{AGENT_NAME}}_{{DATE}}.md` - Cumulative research log
-
-### Vault Output
-```
-vault/
-├── INDEX.md           # Launch page with navigation
-├── Companies/         # Company profiles
-│   ├── Company-A.md
-│   └── Company-B.md
-├── Products/          # Product profiles
-├── People/            # Key people profiles
-├── Technologies/      # Technology overviews
-├── Trends/            # Trend analyses
-└── Resources/         # References and data sources
-```
 
 ## Entity Status Values
 
@@ -78,13 +110,15 @@ vault/
 
 ### The Loop Control Mechanism
 
-- **Documents 1-4** have `Reset: OFF` - they don't auto-reset
+- **Documents 0-4** have `Reset: OFF` - they don't auto-reset
 - **Document 5** has `Reset: ON` - it controls loop continuation
 
 When `5_PROGRESS.md` runs:
 1. It checks how many PENDING entities with CRITICAL/HIGH importance remain
 2. **If high-priority PENDING entities exist**: Reset docs 1-4 → continue
 3. **If no high-priority PENDING entities**: Don't reset → exit and finalize vault
+
+Note: `0_INITIALIZE.md` only runs once and is not reset.
 
 ### Single Loop Iteration
 
@@ -110,11 +144,12 @@ The pipeline exits when ANY of these are true:
 Loop Mode: ON
 Max Loops: 20-30 (market research takes many iterations)
 Documents:
+  0_INITIALIZE.md [Reset: OFF]  ← Runs once, creates vault structure
   1_ANALYZE.md    [Reset: OFF]
   2_DISCOVER.md   [Reset: OFF]
   3_EVALUATE.md   [Reset: OFF]
   4_RESEARCH.md   [Reset: OFF]
-  5_PROGRESS.md   [Reset: ON]
+  5_PROGRESS.md   [Reset: ON]   ← Resets 1-4 only (not 0)
 ```
 
 ### Agent Prompt Configuration
@@ -148,14 +183,15 @@ The vault uses Obsidian-compatible markdown with:
 - **INDEX.md** as the central navigation hub
 - **Source citations** for all factual claims
 - **Subfolder organization** by entity type
+- **Specialized agents** for continued research
 
 ### Using the Vault
 
 The generated vault can be:
 - Opened directly in [Obsidian](https://obsidian.md/) for graph visualization
-- Used as reference documentation
-- Exported to other formats
+- Used with Claude Code (agents are discoverable via `.claude/`)
 - Extended with manual research
+- Exported to other formats
 
 ## Tips
 
@@ -164,15 +200,19 @@ The generated vault can be:
 3. **Review after first loop** - Check LOOP_1_MARKET_ANALYSIS.md before continuing
 4. **Adjust importance** - Manually change entity priorities if needed
 5. **Check the vault** - Open INDEX.md periodically to see progress
-6. **Use max loops** - Market research benefits from more iterations than code playbooks
+6. **Use the agents** - After initialization, spawn entity agents for targeted research
+7. **Use max loops** - Market research benefits from more iterations than code playbooks
 
 ## Customization
 
 ### Adjusting Entity Types
-Edit `1_ANALYZE.md` to change which entity categories are researched.
+Edit `0_INITIALIZE.md` to change which agents are created, or `1_ANALYZE.md` to change which entity categories are researched.
 
 ### Changing Templates
-Modify the entity templates in `4_RESEARCH.md` to capture different information.
+Modify the entity templates in `4_RESEARCH.md` or the agent definitions in `0_INITIALIZE.md`.
 
 ### Coverage Targets
 Adjust the target counts in the market analysis output to control when the playbook exits.
+
+### Adding Custom Agents
+After initialization, add new agent files to `Agents/` - they'll be discoverable via the `.claude/agents` symlink.
