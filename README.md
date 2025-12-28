@@ -152,12 +152,13 @@ Edit `1_ANALYZE.md` to add domain-specific investigation patterns.
 
 ### Creating New Playbooks
 
-Copy an existing playbook folder and modify:
-1. Update the Context section with `**Playbook:** [Name]`
-2. Adjust the discovery patterns in step 2
-3. Modify rating criteria in step 3
-4. Change exit conditions in step 5
-5. For Research playbooks: Create an `Agent-Prompt.md` with configuration placeholders
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the full guide to creating and submitting playbooks to the marketplace.
+
+Quick overview:
+1. Create a folder in `Category/Subcategory/` format
+2. Add README.md and documents 1-5 (optionally 0)
+3. Add your entry to `manifest.json`
+4. Submit a pull request
 
 ## Tips
 
@@ -166,6 +167,10 @@ Copy an existing playbook folder and modify:
 3. **Check the logs** - Each playbook maintains a cumulative log file
 4. **Commit frequently** - Each loop iteration is a good commit point
 5. **Run tests** - After Development playbook changes, verify nothing broke
+
+## Contributing
+
+This repository powers the Maestro in-app Playbook Marketplace. We welcome community contributions! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on creating and submitting new playbooks.
 
 ## License
 
