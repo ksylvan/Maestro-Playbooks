@@ -20,7 +20,7 @@ Evaluate each documentation gap from the discovery phase and assign visibility a
 
 ## Evaluation Checklist
 
-- [ ] **Evaluate gaps**: Read LOOP_{{LOOP_NUMBER}}_GAPS.md, rate each gap by VISIBILITY (PUBLIC/INTERNAL/UTILITY/IMPLEMENTATION) and IMPORTANCE (CRITICAL/HIGH/MEDIUM/LOW). Mark PUBLIC or INTERNAL visibility with HIGH or CRITICAL importance as PENDING for auto-documentation. Output to `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_PLAN.md`.
+- [ ] **Evaluate gaps (or skip if empty)**: Read LOOP_{{LOOP_NUMBER}}_GAPS.md. If it contains no gaps OR all gaps have already been evaluated in LOOP_{{LOOP_NUMBER}}_PLAN.md, mark this task complete without changes. Otherwise, rate each gap by VISIBILITY (PUBLIC/INTERNAL/UTILITY/IMPLEMENTATION) and IMPORTANCE (CRITICAL/HIGH/MEDIUM/LOW). Mark PUBLIC or INTERNAL visibility with HIGH or CRITICAL importance as PENDING for auto-documentation. Output to `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_PLAN.md`.
 
 ## Rating Criteria
 
@@ -151,3 +151,20 @@ Exports that should be documented together for consistency:
 - **Consider dependencies**: Document base types before functions using them
 - **Match existing style**: Be consistent with codebase conventions
 - **Skip obvious code**: Not everything needs documentation
+
+## How to Know You're Done
+
+This task is complete when ONE of the following is true:
+
+**Option A - Evaluated gaps:**
+1. You've read all gaps from `LOOP_{{LOOP_NUMBER}}_GAPS.md`
+2. You've rated each gap for VISIBILITY and IMPORTANCE
+3. You've assigned statuses (PENDING, PENDING - NEEDS CONTEXT, or WON'T DO)
+4. You've written the prioritized plan to `LOOP_{{LOOP_NUMBER}}_PLAN.md`
+
+**Option B - No gaps to evaluate:**
+1. `LOOP_{{LOOP_NUMBER}}_GAPS.md` contains no gaps, OR
+2. All gaps have already been evaluated in `LOOP_{{LOOP_NUMBER}}_PLAN.md`
+3. Mark this task complete without making changes
+
+This graceful handling of empty states prevents the pipeline from stalling when coverage is already at target or no gaps were found.
