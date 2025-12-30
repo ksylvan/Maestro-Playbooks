@@ -20,7 +20,7 @@ Map the security-relevant attack surface of the codebase and run initial vulnera
 
 ## Analysis Checklist
 
-- [ ] **Map attack surface**: Identify authentication code, API endpoints, file operations, database queries, and external service integrations. Run dependency vulnerability scans if available. Run secret scanners if available. Output attack surface map to `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_ATTACK_SURFACE.md`.
+- [ ] **Map attack surface (if needed)**: First check if `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_ATTACK_SURFACE.md` already exists with at least one investigation tactic defined. If it does, skip the mapping and mark this task complete—the attack surface map is already in place. If it doesn't exist, identify authentication code, API endpoints, file operations, database queries, and external service integrations. Run dependency vulnerability scans if available. Run secret scanners if available. Output attack surface map to `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_ATTACK_SURFACE.md`.
 
 ## What to Identify
 
