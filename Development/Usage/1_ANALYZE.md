@@ -2,10 +2,10 @@
 
 ## Context
 - **Playbook:** Usage
-- **Agent:** 🎼 Maestro
-- **Project:** /Users/pedram/Projects/Maestro
-- **Auto Run Folder:** /Users/pedram/Projects/Maestro/tmp/Playbooks
-- **Loop:** 1
+- **Agent:** {{AGENT_NAME}}
+- **Project:** {{AGENT_PATH}}
+- **Auto Run Folder:** {{AUTORUN_FOLDER}}
+- **Loop:** {{LOOP_NUMBER}}
 
 ## Objective
 
@@ -13,14 +13,14 @@ Survey the codebase to discover user-facing features and read the current README
 
 ## Instructions
 
-1. **Read the README.md** at `/Users/pedram/Projects/Maestro/README.md` (or `/Users/pedram/Projects/Maestro/readme.md`)
+1. **Read the README.md** at `{{AGENT_PATH}}/README.md` (or `{{AGENT_PATH}}/readme.md`)
 2. **Survey the codebase** to identify major user-facing features
 3. **Create a feature inventory** listing both documented and actual features
-4. **Output report** to `/Users/pedram/Projects/Maestro/tmp/Playbooks/LOOP_1_FEATURE_INVENTORY.md`
+4. **Output report** to `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_FEATURE_INVENTORY.md`
 
 ## Analysis Checklist
 
-- [ ] **Discover features and scan README**: Read the project's README.md to extract what features are currently documented. Survey the codebase (entry points, CLI commands, API endpoints, UI components, configuration options) to identify actual user-facing features. Output a feature inventory to `/Users/pedram/Projects/Maestro/tmp/Playbooks/LOOP_1_FEATURE_INVENTORY.md`.
+- [ ] **Discover features and scan README (if needed)**: First check if `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_FEATURE_INVENTORY.md` already exists with feature data (at least one feature listed in either "Features Documented in README" or "Features Found in Code" tables). If it does, skip the survey and mark this task complete—the feature inventory is already in place. If it doesn't exist, read the project's README.md to extract what features are currently documented. Survey the codebase (entry points, CLI commands, API endpoints, UI components, configuration options) to identify actual user-facing features. Output a feature inventory to `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_FEATURE_INVENTORY.md`.
 
 ## What to Look For in the Codebase
 
@@ -62,15 +62,15 @@ Survey the codebase to discover user-facing features and read the current README
 
 ## Output Format
 
-Create/update `/Users/pedram/Projects/Maestro/tmp/Playbooks/LOOP_1_FEATURE_INVENTORY.md` with:
+Create/update `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_FEATURE_INVENTORY.md` with:
 
 ```markdown
-# Feature Inventory - Loop 1
+# Feature Inventory - Loop {{LOOP_NUMBER}}
 
 ## README Analysis
 
 ### README Location
-`/Users/pedram/Projects/Maestro/README.md`
+`{{AGENT_PATH}}/README.md`
 
 ### README Structure
 | Section | Description | Line Numbers |
