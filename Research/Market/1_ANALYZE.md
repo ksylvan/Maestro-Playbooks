@@ -25,7 +25,7 @@ Survey the target market to understand its structure, identify relevant entity c
 
 ## Analysis Checklist
 
-- [ ] **Analyze market and initialize vault**: Read Agent-Prompt.md for MARKET_TOPIC and OUTPUT_FOLDER. Use web search to understand the market landscape. Identify which entity categories are most relevant. Create `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_MARKET_ANALYSIS.md` with findings. Initialize the vault folder structure and create INDEX.md as the launch page.
+- [ ] **Analyze market and initialize vault (if needed)**: First check if `{{AUTORUN_FOLDER}}/LOOP_{{LOOP_NUMBER}}_MARKET_ANALYSIS.md` already exists with at least one entity category defined in the "Entity Categories for Research" section. If it does, skip the analysis and mark this task complete—the market analysis is already in place. If it doesn't exist, read Agent-Prompt.md for MARKET_TOPIC and OUTPUT_FOLDER, use web search to understand the market landscape, identify which entity categories are most relevant, create the market analysis file with findings, and initialize the vault folder structure with INDEX.md as the launch page.
 
 ## Output Format
 
